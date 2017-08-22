@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package practica1_201612517;
+import com.sun.xml.internal.ws.api.message.saaj.SAAJFactory;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -20,10 +21,11 @@ public class modoJuego_201612517 {
     private int cont = 0;
     private int aleF = 0;
     private int aleC = 0;
+    private int scanner = 0;
+    private int contMinas = 0;
     private String vol;
     private String yn;
     private Scanner lec = new Scanner(System.in);
-//    private menu_201612517 m = new menu_201612517();
 
     public modoJuego_201612517() {
     }
@@ -45,19 +47,27 @@ public class modoJuego_201612517 {
         System.out.println("Ingresar fila,columna Ej(1,1)");
         do{
         vol = lec.next();
-            System.out.println(Character.getNumericValue(vol.charAt(0))+" "+Character.getNumericValue(vol.charAt(2)));
         if(Character.getNumericValue(vol.charAt(0)) > 0 && Character.getNumericValue(vol.charAt(0)) <= (mod) && 
             Character.getNumericValue(vol.charAt(2)) > 0 && Character.getNumericValue(vol.charAt(2)) <= (mod)){
             System.out.println("PresioneY para aceptar los datos y N para repetir");
             yn = lec.next().toLowerCase();
             if(yn.equals("y")){
-                if(solucion[Character.getNumericValue(vol.charAt(2))][Character.getNumericValue(vol.charAt(2))].equals("*")){
+                if(solucion[(Character.getNumericValue(vol.charAt(0))-1)][(Character.getNumericValue(vol.charAt(2))-1)].equals("*")){
+                    mostrar();
                     System.out.println("PERDISTE");
                 }else{
-                    
+                    if(scanner > 0){
+                        //IZQUIERDA DE SELECCION
+                        scanner(Character.getNumericValue(vol.charAt(0))-1,Character.getNumericValue(vol.charAt(2))-1);
+                        mostrar();
+                        eleccion();
+                        scanner--;
+                        
+                    }else{
+                        System.out.println("GANASTE, FELICIDADES!!");
+                        
+                    }
                 }
-                tablero[Character.getNumericValue(vol.charAt(0))][Character.getNumericValue(vol.charAt(2))]= "A";
-                mostrar();
                 break;
             }if(yn.equals("n")){
                 mostrar();
@@ -87,6 +97,7 @@ public class modoJuego_201612517 {
     public void crearTablero(){
         tablero = new String[mod][mod];
         solucion = new String[mod][mod];
+        scanner = mod*mod;
         for(int fila = 0; fila<4; fila++){
             for(int columna = 0; columna<4; columna++){
                 tablero[fila][columna] = "x";
@@ -154,4 +165,25 @@ public class modoJuego_201612517 {
             
         }
     } 
+    
+    
+    public void scanner(int fila, int colum){
+    //------------------ 4X4-----------------------//    
+    //EXTREMOS
+        for(int a = -1; a <= 1; a++){
+            for(int b = -1; b<= 1; b++){
+                try {
+                     if(solucion[fila+a][colum+b].equals("*")){
+                    contMinas++;
+                }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                }
+               
+            }
+        }
+        
+        tablero[fila][colum]= String.valueOf(contMinas);
+        contMinas=0;
+        
+    }
 }
