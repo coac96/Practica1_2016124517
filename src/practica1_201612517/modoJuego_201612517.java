@@ -44,6 +44,8 @@ public class modoJuego_201612517 {
     }
     public void experto(){
         mod = 8;
+        crearTablero();
+        eleccion();
     }
     
     public void voltear(){
@@ -78,13 +80,22 @@ public class modoJuego_201612517 {
     }
     
     public void reiniciar(){
-        for(int limF = 0; limF <= (mod-1); limF++){
-            for(int limC = 0; limC <= (mod-1); limC++){
-                tablero[limF][limC] =  null;
-                solucion[limF][limC] = null;
-            }
-        }
-        crearTablero();
+       switch(mod){
+           case 4:
+               principiante();
+           break;
+           case 6:
+               intermedio();
+               
+           break;
+               
+           case 8:
+               experto();
+           break;
+           
+           default:
+                   
+       }
     }
     public void mostrar(){
         switch(mod){
@@ -132,7 +143,7 @@ public class modoJuego_201612517 {
             }
                 scanner = 12;
                 System.out.println("--------- SOLUCION ------------------");
-
+                cont = 0;
                 while (cont != 4) {
                     aleC = (int)(Math.random()*3+1);
                     aleF = (int)(Math.random()*3+1);
@@ -164,10 +175,10 @@ public class modoJuego_201612517 {
                 }
                 scanner = 28;
                 System.out.println("--------- SOLUCION ------------------");
-
+                cont=0;
                 while (cont != 8) {
-                    aleC = (int)(Math.random()*3+1);
-                    aleF = (int)(Math.random()*3+1);
+                    aleC = (int)(Math.random()*5+1);
+                    aleF = (int)(Math.random()*5+1);
                     if(solucion[aleC][aleF].equals("x")){
                         solucion[aleC][aleF] = "*";
                         cont++;
@@ -186,7 +197,35 @@ public class modoJuego_201612517 {
                 break;
                 
             case 8:
-                
+                 tablero = new String[mod][mod];
+            solucion = new String[mod][mod];
+            for(int fila = 0; fila < 8; fila++){
+                for(int columna = 0; columna < 8; columna++){
+                    tablero[fila][columna] = "x";
+                    solucion[fila][columna] = "x";
+                }
+            }
+                scanner = 52;
+                System.out.println("--------- SOLUCION ------------------");
+                cont =0;
+                while (cont != 12) {
+                    aleC = (int)(Math.random()*6+1);
+                    aleF = (int)(Math.random()*6+1);
+                    if(solucion[aleC][aleF].equals("x")){
+                        solucion[aleC][aleF] = "*";
+                        cont++;
+                    }
+                    
+                }
+                for(int fila = 0; fila<8; fila++){
+                    for(int columna = 0; columna<8; columna++){
+                        System.out.print(" | "+ solucion[fila][columna] +" | ");
+                        if(columna == 7){
+                            System.out.println("");
+                        }
+                    }
+                }
+                System.out.println("----------------------");
                 break;
         }
         
@@ -210,7 +249,7 @@ public class modoJuego_201612517 {
             break;
                 
             case "s":
-  //              m.menu();
+                 menu_201612517.class.getClass();
             break;
             
             default:
