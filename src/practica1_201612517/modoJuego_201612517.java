@@ -17,7 +17,7 @@ public class modoJuego_201612517 {
     private String[][] tablero;
     private String[][] solucion;
     private int mod = 0;
-    private int elec = 0;
+    private String elec;
     private int cont = 0;
     private int aleF = 0;
     private int aleC = 0;
@@ -38,6 +38,9 @@ public class modoJuego_201612517 {
     
     public void intermedio(){
         mod = 6;
+        crearTablero();
+        eleccion();
+
     }
     public void experto(){
         mod = 8;
@@ -49,24 +52,17 @@ public class modoJuego_201612517 {
         vol = lec.next();
         if(Character.getNumericValue(vol.charAt(0)) > 0 && Character.getNumericValue(vol.charAt(0)) <= (mod) && 
             Character.getNumericValue(vol.charAt(2)) > 0 && Character.getNumericValue(vol.charAt(2)) <= (mod)){
-            System.out.println("PresioneY para aceptar los datos y N para repetir");
+            System.out.println("Presione  Y  para aceptar los datos y  N  para repetir");
             yn = lec.next().toLowerCase();
             if(yn.equals("y")){
                 if(solucion[(Character.getNumericValue(vol.charAt(0))-1)][(Character.getNumericValue(vol.charAt(2))-1)].equals("*")){
                     mostrar();
                     System.out.println("PERDISTE");
                 }else{
-                    if(scanner > 0){
-                        //IZQUIERDA DE SELECCION
                         scanner(Character.getNumericValue(vol.charAt(0))-1,Character.getNumericValue(vol.charAt(2))-1);
                         mostrar();
                         eleccion();
-                        scanner--;
                         
-                    }else{
-                        System.out.println("GANASTE, FELICIDADES!!");
-                        
-                    }
                 }
                 break;
             }if(yn.equals("n")){
@@ -82,32 +78,60 @@ public class modoJuego_201612517 {
     }
     
     public void reiniciar(){
+        for(int limF = 0; limF <= (mod-1); limF++){
+            for(int limC = 0; limC <= (mod-1); limC++){
+                tablero[limF][limC] =  null;
+                solucion[limF][limC] = null;
+            }
+        }
         crearTablero();
     }
     public void mostrar(){
-        for(int fila = 0; fila<4; fila++){
-            for(int columna = 0; columna<4; columna++){
-                System.out.print(" | "+ tablero[fila][columna] +" | ");
-                if(columna == 3){
-                    System.out.println("");
-                }
-            }
-        }        
+        switch(mod){
+            case 4:
+                for(int fila = 0; fila<4; fila++){
+                    for(int columna = 0; columna<4; columna++){
+                        System.out.print(" | "+ tablero[fila][columna] +" | ");
+                        if(columna == 3){
+                            System.out.println("");
+                        }
+                    }
+                }        
+                break;
+            case 6:
+                for(int fila = 0; fila<6; fila++){
+                    for(int columna = 0; columna<6; columna++){
+                        System.out.print(" | "+ tablero[fila][columna] +" | ");
+                        if(columna == 5){
+                            System.out.println("");
+                        }
+                    }
+                }     
+                break;
+
+            case 8:
+                
+                break;
+                
+            default:
+                
+        }
+       
     }
     public void crearTablero(){
-        tablero = new String[mod][mod];
-        solucion = new String[mod][mod];
-        scanner = mod*mod;
-        for(int fila = 0; fila<4; fila++){
-            for(int columna = 0; columna<4; columna++){
-                tablero[fila][columna] = "x";
-                solucion[fila][columna] = "x";
-            }
-        }
         //INSERTAR MINAS
         switch(mod){
             case 4:
-                System.out.println("--------------- SOLUCION ------------------");
+            tablero = new String[mod][mod];
+            solucion = new String[mod][mod];
+            for(int fila = 0; fila < 4; fila++){
+                for(int columna = 0; columna < 4; columna++){
+                    tablero[fila][columna] = "x";
+                    solucion[fila][columna] = "x";
+                }
+            }
+                scanner = 12;
+                System.out.println("--------- SOLUCION ------------------");
 
                 while (cont != 4) {
                     aleC = (int)(Math.random()*3+1);
@@ -126,11 +150,39 @@ public class modoJuego_201612517 {
                         }
                     }
                 }
-                System.out.println("------------------------------");
+                System.out.println("----------------------");
                 break;
 
             case 6:
-                
+                tablero = new String[mod][mod];
+                solucion = new String[mod][mod];
+                for(int fila = 0; fila < 6; fila++){
+                    for(int columna = 0; columna < 6; columna++){
+                        tablero[fila][columna] = "x";
+                        solucion[fila][columna] = "x";
+                    }
+                }
+                scanner = 28;
+                System.out.println("--------- SOLUCION ------------------");
+
+                while (cont != 8) {
+                    aleC = (int)(Math.random()*3+1);
+                    aleF = (int)(Math.random()*3+1);
+                    if(solucion[aleC][aleF].equals("x")){
+                        solucion[aleC][aleF] = "*";
+                        cont++;
+                    }
+                    
+                }
+                for(int fila = 0; fila<6; fila++){
+                    for(int columna = 0; columna<6; columna++){
+                        System.out.print(" | "+ solucion[fila][columna] +" | ");
+                        if(columna == 5){
+                            System.out.println("");
+                        }
+                    }
+                }
+                System.out.println("----------------------");
                 break;
                 
             case 8:
@@ -141,29 +193,40 @@ public class modoJuego_201612517 {
         
     }
     public void eleccion(){
-        System.out.println("---------------");
-        System.out.println("1. Voltear");
-        System.out.println("2. Reiniciar");
-        System.out.println("3. Salir");
-        System.out.println("");
-        System.out.println("Ingresar Opcion: ");        
-        elec = lec.nextInt();
-        switch(elec){
-            case 1:
+        if(scanner > 0){
+            System.out.println("V.   Voltear");
+            System.out.println("R.   Reiniciar");
+            System.out.println("S.   Salir");
+            System.out.println("Ingresar Opcion: ");    
+        try {
+            elec = lec.next();
+        switch(String.valueOf(elec).toLowerCase()){
+            case "v":
                 voltear();
             break;
-            case 2:
+                
+            case "r":
                 reiniciar();
             break;
                 
-            case 3:
+            case "s":
   //              m.menu();
             break;
             
             default:
+                
             break;
             
         }
+        }catch (java.util.InputMismatchException e) {
+         
+        }
+            System.out.println("---------------");
+
+        }else{
+            System.out.println("GANASTE, FELICIDADES");
+        }
+        
     } 
     
     
@@ -184,6 +247,8 @@ public class modoJuego_201612517 {
         
         tablero[fila][colum]= String.valueOf(contMinas);
         contMinas=0;
-        
+        scanner--;
+        System.out.println(scanner);
+
     }
 }
