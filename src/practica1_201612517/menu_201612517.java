@@ -11,42 +11,49 @@ import java.util.Scanner;
  * @author Coac_96
  */
 public class menu_201612517 {
-    private int eleccion = 0;
+    private String eleccion;
     private modoJuego_201612517 mj =new  modoJuego_201612517();
     private Scanner lector = new Scanner(System.in);
+    
     public menu_201612517() {
     }
+    
     public void menu(){
-        
-        while(eleccion != 4){
+       do{
         System.out.println("---------------------------");
         System.out.println("BUSCAMINAS!!!!");
         System.out.println("1. Principiante");
         System.out.println("2. Intermedio");
         System.out.println("3. Experto");
         System.out.println("4. Salir");
-        eleccion = lector.nextInt();
+        eleccion = lector.next();
         switch(eleccion){
-            case 1:
+            
+
+            case "1":
                 mj.principiante();
             break;
             
-            case 2:
+            case "2":
                 mj.intermedio();
             break;
                 
-            case 3:
+            case "3":
                 mj.experto();
             break;
                 
-            case 4:
+            case "4":
                 System.out.println("ADIOS");
             break;
                 
             default:
+                System.out.println("ELECCION EQUIVOCADA");
             break;
             }
                System.out.println("---------------------------");
+            
+      
+       }while(eleccion =="4");
         }
     }
-}
+
