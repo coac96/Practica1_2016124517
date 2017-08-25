@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package practica1_201612517;
-import com.sun.xml.internal.ws.api.message.saaj.SAAJFactory;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -271,6 +270,7 @@ public class modoJuego_201612517 {
     }
     public void eleccion(){
         if(scanner > 0){
+        do{
             System.out.println("V.   Voltear");
             System.out.println("R.   Reiniciar");
             System.out.println("S.   Salir");
@@ -287,6 +287,7 @@ public class modoJuego_201612517 {
             break;
                 
             case "s":
+                System.out.println("SALIENDO");
             break;
             
             default:
@@ -298,12 +299,15 @@ public class modoJuego_201612517 {
          
         }
             System.out.println("---------------");
-
+        }while(elec == "s");
+    
         }else{
             System.out.println("GANASTE, FELICIDADES");
         }
+        
     } 
     
+        
     
     public void scanner(int fila, int colum){
     //------------------ 4X4-----------------------//    
