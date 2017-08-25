@@ -49,23 +49,34 @@ public class modoJuego_201612517 {
     }
     
     public void voltear(){
-        System.out.println("Ingresar fila,columna Ej(1,1)");
         do{
-        vol = lec.next();
+        System.out.println("Ingresar fila,columna Ej(1,1)");
+         vol = lec.next();
+         
         if(Character.getNumericValue(vol.charAt(0)) > 0 && Character.getNumericValue(vol.charAt(0)) <= (mod) && 
             Character.getNumericValue(vol.charAt(2)) > 0 && Character.getNumericValue(vol.charAt(2)) <= (mod)){
+
             System.out.println("Presione  Y  para aceptar los datos y  N  para repetir");
             yn = lec.next().toLowerCase();
             if(yn.equals("y")){
-                if(solucion[(Character.getNumericValue(vol.charAt(0))-1)][(Character.getNumericValue(vol.charAt(2))-1)].equals("*")){
-                    mostrar();
+               if(solucion[(Character.getNumericValue(vol.charAt(0))-1)][(Character.getNumericValue(vol.charAt(2))-1)].equals("*")){
                     System.out.println("PERDISTE");
+                    System.out.println("-----------------------");
+                        mostrarSol();
+                    System.out.println("------------------------");
+
                 }else{
+                    if(tablero[(Character.getNumericValue(vol.charAt(0))-1)][(Character.getNumericValue(vol.charAt(2))-1)] != "x"){
+                    System.out.println("Casilla ya seleccionada");
+                    }else{
+                        
                         scanner(Character.getNumericValue(vol.charAt(0))-1,Character.getNumericValue(vol.charAt(2))-1);
                         mostrar();
                         eleccion();
                         
+                    }
                 }
+                
                 break;
             }if(yn.equals("n")){
                 mostrar();
@@ -77,6 +88,7 @@ public class modoJuego_201612517 {
         }
         }while(Character.getNumericValue(vol.charAt(0)) >=  0 || Character.getNumericValue(vol.charAt(0)) < (mod) ||
                 Character.getNumericValue(vol.charAt(2)) >= 0 || Character.getNumericValue(vol.charAt(2)) < (mod));
+       
     }
     
     public void reiniciar(){
@@ -128,6 +140,32 @@ public class modoJuego_201612517 {
                 
         }
        
+    }
+    
+    public void mostrarSol(){
+        switch(mod){
+            case 4:
+               for(int fila = 0; fila<4; fila++){
+                    for(int columna = 0; columna<4; columna++){
+                        System.out.print(" | "+ solucion[fila][columna] +" | ");
+                        if(columna == 3){
+                            System.out.println("");
+                        }
+                    }
+                }
+            
+                break;
+            case 6:
+                break;
+            case 8:
+                break;
+                
+                
+                default:
+                    
+                    
+            
+        }
     }
     public void crearTablero(){
         //INSERTAR MINAS
@@ -249,11 +287,10 @@ public class modoJuego_201612517 {
             break;
                 
             case "s":
-                 menu_201612517.class.getClass();
             break;
             
             default:
-                
+                System.out.println("ERROR DE ELECCION");
             break;
             
         }
@@ -265,7 +302,6 @@ public class modoJuego_201612517 {
         }else{
             System.out.println("GANASTE, FELICIDADES");
         }
-        
     } 
     
     
